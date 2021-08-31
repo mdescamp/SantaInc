@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello FactoryController!{% endblock %}
+
+{% block body %}
+    <div>
+        {% for factory in factories %}
+            <div>
+                {{ factory.name }}
+            </div>
+        {% else %}
+            No factories present
+        {% endfor %}
+    </div>
+{% endblock %}

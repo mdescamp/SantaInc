@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello GiftController!{% endblock %}
+
+{% block body %}
+    <div>
+        <form action="">
+            <label for="gift_code">Code</label>
+            <select name="gift_code" id="gift_code">
+                {% for giftCodes in giftCodes %}
+                    <option value="{{ giftCodes.id }}">{{ giftCodes.code }}</option>
+                {% endfor %}
+            </select>
+            <input type="submit" value="Search">
+        </form>
+    </div>
+
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Factory</th>
+            <th>receiver</th>
+            <th>Price</th>
+            <th>Code</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for gift in gifts %}
+            <tr>
+                <td>{{ gift.factory.name }}</td>
+                <td>{{ gift.receiver ? gift.receiver.fullName }}</td>
+                <td>{{ gift.price }}</td>
+                <td>{{ gift.code.code }}</td>
+                <td>{{ gift.description|raw }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+
+
+{% endblock %}

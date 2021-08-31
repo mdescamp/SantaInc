@@ -3,6 +3,20 @@
 {% block title %}Home {{ parent() }}{% endblock %}
 
 {% block body %}
-<div class="example-wrapper">
-</div>
+    <div>
+        <form action="{{ path('save_file') }}" method="post" enctype="multipart/form-data">
+            {% if app.user.factories|length > 1 %}
+                <label for="select-factory">Factory</label>
+                <select name="factory_id" id="select-factory">
+                    {% for factory in app.user.factories %}
+                        <option value="{{ factory.id }}">{{ factory.name }}</option>
+                    {% endfor %}
+                </select>
+            {% endif %}
+
+            <input id="input-factory-file" type="file" name="factory-file" required>
+            <label for="input-factory-file">Fichier</label>
+            <input type="submit" value="Send">
+        </form>
+    </div>
 {% endblock %}

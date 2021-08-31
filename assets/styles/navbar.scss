@@ -1,0 +1,27 @@
+#navbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+  background-color: $yellow;
+  overflow: auto;
+}
+
+#navbar a {
+  flex: 1;
+  padding: 1%;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+
+}
+
+#navbar a:hover {
+  background-color: $orange;
+}
+
+#navbar a.active {
+  background-color: $green;
+}
+
+

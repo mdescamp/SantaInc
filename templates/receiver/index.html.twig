@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ReceiverController!{% endblock %}
+
+{% block body %}
+    <div>
+        {% for receiver in receivers %}
+            <div>
+                <ul>
+                    <li>{{ receiver.firstName }}</li>
+                    <li>{{ receiver.lastName }}</li>
+                    <li>{{ receiver.uuid }}</li>
+                    <li>{{ receiver.country }}</li>
+                </ul>
+            </div>
+        {% else %}
+            No receivers present
+        {% endfor %}
+    </div>
+{% endblock %}

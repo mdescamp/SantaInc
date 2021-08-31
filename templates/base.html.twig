@@ -1,17 +1,39 @@
 <!DOCTYPE html>
 <html lang="">
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %} - Santa Inc{% endblock %}</title>
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-        {% endblock %}
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} - Santa Inc{% endblock %}</title>
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
 
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+        {{ encore_entry_script_tags('navbar') }}
+    {% endblock %}
+</head>
+<body>
+<div id="navbar">
+    <a href="{{ path('home') }}" class="{{ app.request.attributes.get('_route') == 'home' ? 'active' }}">Home</a>
+    <a href="{{ path('factory_home') }}" class="{{ app.request.attributes.get('_route') == 'factory_home' ? 'active' }}">Factories</a>
+    <a href="{{ path('receiver_home') }}" class="{{ app.request.attributes.get('_route') == 'receiver_home' ? 'active' }}">Receiver</a>
+    <a href="{{ path('gift_home') }}" class="{{ app.request.attributes.get('_route') == 'gift_home' ? 'active' }}">Gifts</a>
+</div>
+
+<div id="flashes-div">
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert alert-{{ label }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+</div>
+
+{% block body %}
+    <div id="base">
+
+    </div>
+{% endblock %}
+</body>
 </html>
