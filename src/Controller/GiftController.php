@@ -19,9 +19,6 @@ class GiftController extends AbstractController
 
         $gifts = $giftRepository->findAll();
 
-        return $this->render('gift/index.html.twig', [
-            'gifts' => $gifts,
-            'giftCodes' => $giftCodes
-        ]);
+        return $this->render('gift/index.html.twig', compact('gifts', 'giftCodes'));
     }
 }

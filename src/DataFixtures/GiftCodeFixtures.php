@@ -1,4 +1,4 @@
-<?php /** @noinspection PhpParamsInspection */
+<?php
 
 namespace App\DataFixtures;
 

@@ -6,6 +6,7 @@ use App\Repository\FactoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JetBrains\PhpStorm\Pure;
 
 /**
  * @ORM\Entity(repositoryClass=FactoryRepository::class)
@@ -42,7 +43,7 @@ class Factory
      */
     private $gifts;
 
-    public function __construct()
+    #[Pure] public function __construct()
     {
         $this->users = new ArrayCollection();
         $this->gifts = new ArrayCollection();
@@ -145,11 +146,9 @@ class Factory
 
     public function removeGift(Gift $gift): self
     {
-        if ($this->gifts->removeElement($gift)) {
-            // set the owning side to null (unless already changed)
-            if ($gift->getFactory() === $this) {
-                $gift->setFactory(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->gifts->removeElement($gift) && $gift->getFactory() === $this) {
+            $gift->setFactory(null);
         }
 
         return $this;

@@ -7,6 +7,7 @@ use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JetBrains\PhpStorm\Pure;
 
 /**
  * @ORM\Entity(repositoryClass=ReceiverRepository::class)
@@ -50,7 +51,7 @@ class Receiver
      */
     private $gifts;
 
-    public function __construct()
+    #[Pure] public function __construct()
     {
         $this->gifts = new ArrayCollection();
     }
@@ -164,11 +165,9 @@ class Receiver
 
     public function removeGift(Gift $gift): self
     {
-        if ($this->gifts->removeElement($gift)) {
-            // set the owning side to null (unless already changed)
-            if ($gift->getReceiver() === $this) {
-                $gift->setReceiver(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->gifts->removeElement($gift) && $gift->getReceiver() === $this) {
+            $gift->setReceiver(null);
         }
 
         return $this;

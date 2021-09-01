@@ -45,6 +45,7 @@ class FileFactoryCommand extends Command
     ];
     private array $errors = [];
 
+    private array $code = [];
 
     public function __construct(KernelInterface $kernel, EntityManagerInterface $em)
     {
@@ -132,28 +133,34 @@ class FileFactoryCommand extends Command
     protected function hydrateDb(string $file, array $data): void
     {
         $giftCode = $this->em->getRepository(GiftCode::class)->findOneBy(['code' => $data[self::GIFT_CODE]]);
-        if ($giftCode === null) {
+        if ($giftCode === null && !\in_array($this->code, $data[self::GIFT_CODE], true)) {
             $giftCode = new GiftCode();
             $giftCode->setCode($data[self::GIFT_CODE]);
             $this->em->persist($giftCode);
+            $this->code[] = $data[self::GIFT_CODE];
         }
 
-        $gift = new Gift();
-        $gift
-            ->setFactory($this->em->find(Factory::class, explode('-', $file)[0]))
-            ->setUuid($data[self::GIFT_UUID])
-            ->setCode($giftCode)
-            ->setDescription(nl2br(htmlspecialchars($data[self::GIFT_DESC])))
-            ->setPrice($data[self::GIFT_PRIC]);
-        $this->em->persist($gift);
-
-        $receiver = new Receiver();
-        $receiver
-            ->setUuid($data[self::RECEI_UUID])
-            ->setLastName($data[self::RECEI_LAST])
-            ->setFirstName($data[self::RECEI_FIRS])
-            ->setCountry($data[self::RECEI_COUN])
-            ->addGift($gift);
-        $this->em->persist($receiver);
+        $gift = $this->em->getRepository(Gift::class)->findOneBy(['uuid' => $data[self::GIFT_UUID]]);
+        if ($gift === null) {
+            $gift = new Gift();
+            $gift
+                ->setFactory($this->em->find(Factory::class, explode('-', $file)[0]))
+                ->setUuid($data[self::GIFT_UUID])
+                ->setCode($giftCode)
+                ->setDescription(nl2br(htmlspecialchars($data[self::GIFT_DESC])))
+                ->setPrice($data[self::GIFT_PRIC]);
+            $this->em->persist($gift);
+        }
+        $receiver = $this->em->getRepository(Receiver::class)->findOneBy(['uuid' => $data[self::RECEI_UUID]]);
+        if ($receiver === null) {
+            $receiver = new Receiver();
+            $receiver
+                ->setUuid($data[self::RECEI_UUID])
+                ->setLastName($data[self::RECEI_LAST])
+                ->setFirstName($data[self::RECEI_FIRS])
+                ->setCountry($data[self::RECEI_COUN])
+                ->addGift($gift);
+            $this->em->persist($receiver);
+        }
     }
 }

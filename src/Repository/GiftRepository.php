@@ -6,6 +6,8 @@ use App\Entity\Factory;
 use App\Entity\Gift;
 use App\Entity\Receiver;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -21,6 +23,10 @@ class GiftRepository extends ServiceEntityRepository
         parent::__construct($registry, Gift::class);
     }
 
+    /**
+     * @throws NonUniqueResultException
+     * @throws NoResultException
+     */
     public function getCountryNumber(Factory $factory)
     {
         return $this->createQueryBuilder('g')
@@ -32,6 +38,10 @@ class GiftRepository extends ServiceEntityRepository
             ->getSingleResult()['country'];
     }
 
+    /**
+     * @throws NonUniqueResultException
+     * @throws NoResultException
+     */
     public function getPriceMax(Factory $factory)
     {
         return $this->createQueryBuilder('g')
@@ -42,6 +52,10 @@ class GiftRepository extends ServiceEntityRepository
                 ->getSingleResult()['price'] ?? 0;
     }
 
+    /**
+     * @throws NonUniqueResultException
+     * @throws NoResultException
+     */
     public function getPriceMin(Factory $factory)
     {
         return $this->createQueryBuilder('g')
@@ -52,6 +66,10 @@ class GiftRepository extends ServiceEntityRepository
                 ->getSingleResult()['price'] ?? 0;
     }
 
+    /**
+     * @throws NonUniqueResultException
+     * @throws NoResultException
+     */
     public function getPriceAVG(Factory $factory)
     {
         return $this->createQueryBuilder('g')

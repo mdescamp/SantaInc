@@ -42,18 +42,18 @@ class Gift
      * @ORM\ManyToOne(targetEntity=Factory::class, inversedBy="gifts")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $factory;
+    private ?Factory $factory;
 
     /**
      * @ORM\ManyToOne(targetEntity=Receiver::class, inversedBy="gifts")
      */
-    private $receiver;
+    private ?Receiver $receiver;
 
     /**
      * @ORM\ManyToOne(targetEntity=GiftCode::class, inversedBy="gifts")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $code;
+    private ?GiftCode $code;
 
 
     public function getCreatedAt(): ?\DateTimeImmutable
