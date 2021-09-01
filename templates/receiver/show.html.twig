@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+{{ receiver.fullName }}
+{{ receiver.country }}
+    {% for gift in receiver.gifts %}
+        {{ gift.factory.name }}
+        {{ gift.code.code }}
+        {{ gift.price }}
+        {{ gift.description|raw }}
+    {% endfor %}
+{% endblock %}
+

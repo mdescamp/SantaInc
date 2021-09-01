@@ -24,3 +24,10 @@
 npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###
+
+
+###> App ###
+public/error
+public/waiting
+public/processed
+###< App ###

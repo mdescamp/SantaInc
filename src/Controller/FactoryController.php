@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\FactoryRepository;
+use App\Repository\GiftRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -11,12 +12,21 @@ use Symfony\Component\Routing\Annotation\Route;
 class FactoryController extends AbstractController
 {
     #[Route('/home', name: 'home')]
-    public function index(FactoryRepository $factoryRepository): Response
+    public function index(FactoryRepository $factoryRepository, GiftRepository $giftRepository): Response
     {
         $factories = $factoryRepository->findAll();
+        foreach ($factories as $factory) {
+            $details[$factory->getId()] = [
+                'priceMax' => $giftRepository->getPriceMax($factory),
+                'priceMin' => $giftRepository->getPriceMin($factory),
+                'priceAvg' => $giftRepository->getPriceAVG($factory),
+                'country' => $giftRepository->getCountryNumber($factory),
+            ];
+        }
 
         return $this->render('factory/index.html.twig', [
-            'factories' => $factories
+            'factories' => $factories,
+            'details' => $details ?? []
         ]);
     }
 }

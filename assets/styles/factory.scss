@@ -1,0 +1,20 @@
+.div-factory {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.square-factory {
+  background-color: darkgrey;
+  width: 30%;
+  border: 1px solid #48484d;
+  padding: 1%;
+  margin: 1%;
+  text-align: center;
+  align-content: center;
+}
+
+.description-factory {
+  display: flex;
+  justify-content: space-around;
+}

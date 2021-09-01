@@ -3,10 +3,28 @@
 {% block title %}Hello FactoryController!{% endblock %}
 
 {% block body %}
-    <div>
+    <div class="div-factory">
         {% for factory in factories %}
-            <div>
-                {{ factory.name }}
+            <div class="square-factory">
+                <h5 class="">{{ factory.name }}</h5>
+                <div class="description-factory">
+                    <div>{{ factory.gifts|length }} Gift(s)</div>
+                    <div>{{ factory.users|length }} User(s)</div>
+                </div>
+                <table class="w-100">
+                    <tr>
+                        <td>Price max</td>
+                        <td>Price min</td>
+                        <td>Price avg</td>
+                        <td>Country nb</td>
+                    </tr>
+                    <tr>
+                        <td>{{ details[factory.id].priceMax }}</td>
+                        <td>{{ details[factory.id].priceMin }}</td>
+                        <td>{{ details[factory.id].priceAvg }}</td>
+                        <td>{{ details[factory.id].country }}</td>
+                    </tr>
+                </table>
             </div>
         {% else %}
             No factories present

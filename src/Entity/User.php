@@ -49,6 +49,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $factories;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $apiKey;
+
     public function __construct()
     {
         $this->factories = new ArrayCollection();
@@ -200,6 +205,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         if ($this->factories->removeElement($factory)) {
             $factory->removeUser($this);
         }
+
+        return $this;
+    }
+
+    public function getApiKey(): ?string
+    {
+        return $this->apiKey;
+    }
+
+    public function setApiKey(?string $apiKey): self
+    {
+        $this->apiKey = $apiKey;
 
         return $this;
     }

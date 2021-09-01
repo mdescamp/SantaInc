@@ -23,7 +23,7 @@ class GiftCodeFixtures extends Fixture implements DependentFixtureInterface
         for ($i = 1; $i <= 10; $i++) {
             $giftCode = new GiftCode();
             $giftCode
-                ->setCode($this->faker->realText(10));
+                ->setCode($this->faker->unique()->realText(10));
             $this->addReference("giftCode_$i", $giftCode);
 
             $manager->persist($giftCode);

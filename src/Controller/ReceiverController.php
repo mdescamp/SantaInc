@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Receiver;
 use App\Repository\ReceiverRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,6 +18,14 @@ class ReceiverController extends AbstractController
 
         return $this->render('receiver/index.html.twig', [
             'receivers' => $receivers,
+        ]);
+    }
+
+    #[Route('/{id}/show', name: 'show')]
+    public function show(Receiver $receiver): Response
+    {
+        return $this->render('receiver/show.html.twig', [
+            'receiver' => $receiver
         ]);
     }
 }

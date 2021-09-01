@@ -6,6 +6,7 @@ use App\Entity\Receiver;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use Faker\Factory;
 use Faker\Generator;
 
 class ReceiverFixtures extends Fixture implements DependentFixtureInterface
@@ -14,7 +15,7 @@ class ReceiverFixtures extends Fixture implements DependentFixtureInterface
 
     public function __construct()
     {
-        $this->faker = \Faker\Factory::create();
+        $this->faker = Factory::create();
     }
 
     public function load(ObjectManager $manager): void

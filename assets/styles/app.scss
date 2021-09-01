@@ -1,8 +1,20 @@
 @import "colors";
 @import "navbar";
+@import "factory";
+@import "receiver";
 @import "~bootstrap/scss/bootstrap";
+@import "~@fortawesome/fontawesome-free/scss/fontawesome";
 body {
     background-color: $blue;
     padding: 0;
     margin: 0;
+}
+
+#base {
+    padding: 1%;
+}
+
+
+.c-white {
+    color: white;
 }

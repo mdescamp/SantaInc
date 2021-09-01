@@ -2,7 +2,9 @@
 
 namespace App\Repository;
 
+use App\Entity\Factory;
 use App\Entity\Gift;
+use App\Entity\Receiver;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -19,32 +21,44 @@ class GiftRepository extends ServiceEntityRepository
         parent::__construct($registry, Gift::class);
     }
 
-    // /**
-    //  * @return Gift[] Returns an array of Gift objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function getCountryNumber(Factory $factory)
     {
         return $this->createQueryBuilder('g')
-            ->andWhere('g.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('g.id', 'ASC')
-            ->setMaxResults(10)
+            ->select('COUNT(DISTINCT(r.country)) as country')
+            ->join(Receiver::class, 'r', 'WITH', 'r.id = g.receiver')
+            ->andWhere('g.factory = :id')
+            ->setParameter('id', $factory->getId())
             ->getQuery()
-            ->getResult()
-        ;
+            ->getSingleResult()['country'];
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Gift
+    public function getPriceMax(Factory $factory)
     {
         return $this->createQueryBuilder('g')
-            ->andWhere('g.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+                ->select('MAX(g.price) as price')
+                ->andWhere('g.factory = :id')
+                ->setParameter('id', $factory->getId())
+                ->getQuery()
+                ->getSingleResult()['price'] ?? 0;
     }
-    */
+
+    public function getPriceMin(Factory $factory)
+    {
+        return $this->createQueryBuilder('g')
+                ->select('MIN(g.price) as price')
+                ->andWhere('g.factory = :id')
+                ->setParameter('id', $factory->getId())
+                ->getQuery()
+                ->getSingleResult()['price'] ?? 0;
+    }
+
+    public function getPriceAVG(Factory $factory)
+    {
+        return $this->createQueryBuilder('g')
+                ->select('AVG(g.price) as price')
+                ->andWhere('g.factory = :id')
+                ->setParameter('id', $factory->getId())
+                ->getQuery()
+                ->getSingleResult()['price'] ?? 0;
+    }
 }
