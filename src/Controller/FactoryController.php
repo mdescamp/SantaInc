@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\_Const;
 use App\Repository\FactoryRepository;
 use App\Repository\GiftRepository;
 use Doctrine\ORM\NonUniqueResultException;
@@ -25,7 +26,7 @@ class FactoryController extends AbstractController
             $details[$factory->getId()] = [
                 'priceMax' => $giftRepository->getPriceMax($factory),
                 'priceMin' => $giftRepository->getPriceMin($factory),
-                'priceAvg' => $giftRepository->getPriceAVG($factory),
+                'priceAvg' => round($giftRepository->getPriceAVG($factory), _Const::DEFAULT_PRECISION),
                 'country' => $giftRepository->getCountryNumber($factory),
             ];
         }

@@ -1,13 +1,56 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-{{ receiver.fullName }}
-{{ receiver.country }}
-    {% for gift in receiver.gifts %}
-        {{ gift.factory.name }}
-        {{ gift.code.code }}
-        {{ gift.price }}
-        {{ gift.description|raw }}
-    {% endfor %}
+    <div class="row mb-3">
+        <div class="col-6">
+            <a href="{{ path('receiver_home') }}" class="btn btn-warning">
+                <i class="fas fa-long-arrow-alt-left c-white"></i>
+            </a>
+        </div>
+        <div class="col-6 text-end">
+            <a href="{{ path('receiver_edit', {'id': receiver.id}) }}" class="btn btn-success">
+                <i class="fas fa-edit c-white"></i>
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h2>{{ receiver.fullName }} ({{ receiver.country }})</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h4>Gifts</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            {% if receiver.gifts is not empty %}
+
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Factory</th>
+                        <th>Code</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for gift in receiver.gifts %}
+                        <tr>
+                            <td>{{ gift.factory.name }}</td>
+                            <td>{{ gift.code.code }}</td>
+                            <td>{{ gift.description|raw }}</td>
+                            <td>{{ gift.price }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p>No gifts ordered</p>
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}
 

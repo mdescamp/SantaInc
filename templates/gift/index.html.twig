@@ -3,15 +3,53 @@
 {% block title %}Hello GiftController!{% endblock %}
 
 {% block body %}
-    <div>
-        <form action="">
-            <label for="gift_code">Code</label>
-            <select name="gift_code" id="gift_code">
-                {% for giftCodes in giftCodes %}
-                    <option value="{{ giftCodes.id }}">{{ giftCodes.code }}</option>
-                {% endfor %}
-            </select>
-            <input type="submit" value="Search">
+    <div class="row mb-3 mt-3">
+        <form action="" method="post">
+            <div class="row">
+                <div class="col-1 text-center">
+                    <label for="code-input">Code</label>
+                </div>
+                <div class="col-1">
+                    <select name="code" id="code-input" class="form-control">
+                        <option value="">----</option>
+                        {% for code in codes %}
+                            <option value="{{ code.id }}" {{ selected.code == code.id ? 'selected' }}>{{ code.code }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-1 text-center">
+                    <label for="factory-input">Factory</label>
+                </div>
+                <div class="col-1">
+                    <select name="factory" id="factory-input" class="form-control">
+                        <option value="">----</option>
+                        {% for factory in factories %}
+                            <option value="{{ factory.id }}" {{ selected.factory == factory.id ? 'selected' }}>{{ factory.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-1 text-center">
+                    <label for="receiver-input">Receiver</label>
+                </div>
+                <div class="col-2">
+                    <input type="text" name="receiver" id="receiver-input" class="form-control" value="{{ selected.receiver }}">
+                </div>
+                <div class="col-1 text-center">
+                    <label for="price-input-min">Price</label>
+                </div>
+                <div class="col-1">
+                    <input type="number" name="price-min" id="price-input-min" class="form-control" value="{{ selected['price-min'] }}">
+                </div>
+                <div class="col-1 text-center">
+                    <label for="price-input-max">to</label>
+                </div>
+                <div class="col-1">
+                    <input type="number" name="price-max" id="price-input-max" class="form-control" value="{{ selected['price-max'] }}">
+                </div>
+                <div class="col-1">
+                    <input type="submit" value="Search" class="btn btn-success">
+                </div>
+            </div>
         </form>
     </div>
 

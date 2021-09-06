@@ -3,28 +3,35 @@
 {% block title %}Hello ReceiverController!{% endblock %}
 
 {% block body %}
-    <div>
-        <table class="table table-bordered">
-            <thead>
-            <tr class="text-center">
-                <th>FirstName</th>
-                <th>LastName</th>
-                <th>Country</th>
-                <th>Gifts</th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for receiver in receivers %}
+    <div class="row mb-3">
+        <div class="col-12 text-end">
+            <a href="{{ path('receiver_new') }}" class="btn btn-success"><i class="fas fa-plus-square c-white"></i></a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <table class="table table-bordered">
+                <thead>
                 <tr class="text-center">
-                    <td>{{ receiver.firstName }}</td>
-                    <td>{{ receiver.lastName }}</td>
-                    <td>{{ receiver.country }}</td>
-                    <td>{{ receiver.gifts|length }}</td>
-                    <td><a href="{{ path('receiver_show', {'id': receiver.id}) }}"><i class="fas fa-eye c-white"></i></a></td>
+                    <th>FirstName</th>
+                    <th>LastName</th>
+                    <th>Country</th>
+                    <th>Gifts</th>
+                    <th></th>
                 </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                {% for receiver in receivers %}
+                    <tr class="text-center">
+                        <td>{{ receiver.firstName }}</td>
+                        <td>{{ receiver.lastName }}</td>
+                        <td>{{ receiver.country }}</td>
+                        <td>{{ receiver.gifts|length }}</td>
+                        <td><a href="{{ path('receiver_show', {'id': receiver.id}) }}"><i class="fas fa-eye c-white"></i></a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 {% endblock %}

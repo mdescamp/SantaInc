@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {{ form_start(form) }}
+    {{ form_errors(form) }}
+    <div class="row mb-4">
+        <div class="col-6">
+            <a href="{{ path('receiver_home') }}" class="btn btn-warning">
+                <i class="fas fa-long-arrow-alt-left c-white"></i>
+            </a>
+        </div>
+        <div class="col-6 text-end">
+            <button class="btn btn-success"><i class="fas fa-save me-2"></i>{{ button_label|default('Save') }}</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h4 class="h4 text-white text-center">Receiver</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2">
+            {{ form_label(form.lastName) }}
+        </div>
+        <div class="col-10">
+            {{ form_widget(form.lastName) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2">
+            {{ form_label(form.firstName) }}
+        </div>
+        <div class="col-10">
+            {{ form_widget(form.firstName) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2">
+            {{ form_label(form.country) }}
+        </div>
+        <div class="col-10">
+            {{ form_widget(form.country) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="offset-4 col-md-4 form-group offset-4">
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}
