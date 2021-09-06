@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Controller;
 
@@ -15,16 +16,19 @@ class ApiController extends AbstractController
     #[Route('/file', name: 'file', methods: ['POST'])]
     public function index(Request $request, ApiService $apiService, FileService $fileService): Response
     {
+        $response = null;
         if ($apiService->verifyApiKey($request) === false) {
-            return $this->json('Invalid credentials');
+            $response = 'Invalid credentials';
         }
 
-        if ($apiService->verifyBody($request) === false) {
-            return $this->json('Body not well formatted');
+        if ($response === null && $apiService->verifyBody($request) === false) {
+            $response = 'Body not well formatted';
         }
 
-        $fileService->save($request->files->get('file'), $request->get('factory'));
+        if ($response === null) {
+            $fileService->save($request->files->get('file'), $request->get('factory'));
+        }
 
-        return $this->json('OK');
+        return $this->json($response ?? 'ok');
     }
 }

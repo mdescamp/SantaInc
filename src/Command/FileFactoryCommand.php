@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Command;
 
@@ -33,19 +34,19 @@ class FileFactoryCommand extends Command
     public const RECEI_LAST = 6;
     public const RECEI_COUN = 7;
 
-    private array $firstLineExpected = [
-        0 => "gift_uuid",
-        1 => "gift_code",
-        2 => "gift_description",
-        3 => "gift_price",
-        4 => "receiver_uuid",
-        5 => "receiver_first_name",
-        6 => "receiver_last_name",
-        7 => "receiver_country_code",
+    private static array $firstLineExpected = [
+        0 => 'gift_uuid',
+        1 => 'gift_code',
+        2 => 'gift_description',
+        3 => 'gift_price',
+        4 => 'receiver_uuid',
+        5 => 'receiver_first_name',
+        6 => 'receiver_last_name',
+        7 => 'receiver_country_code',
     ];
     private array $errors = [];
 
-    private array $code = [];
+    private array $giftCode = [];
 
     public function __construct(KernelInterface $kernel, EntityManagerInterface $em)
     {
@@ -69,7 +70,7 @@ class FileFactoryCommand extends Command
         $waitingDir = $this->kernel->getProjectDir() . '/public/waiting';
         $processedDir = $this->kernel->getProjectDir() . '/public/processed';
         $errorDir = $this->kernel->getProjectDir() . '/public/error';
-        $countColumns = \count($this->firstLineExpected);
+        $countColumns = \count($this::$firstLineExpected);
 
         $this->createDir($processedDir, $errorDir);
         if (is_dir($waitingDir) && $dh = opendir($waitingDir)) {
@@ -113,7 +114,7 @@ class FileFactoryCommand extends Command
 
     protected function getErrors(array $data, string $file, string $filePath): void
     {
-        foreach ($this->firstLineExpected as $key => $value) {
+        foreach ($this::$firstLineExpected as $key => $value) {
             if ($data[$key] !== $value) {
                 $this->errors[$filePath] = "File '$file' is not correctly formatted";
                 break;
@@ -133,11 +134,11 @@ class FileFactoryCommand extends Command
     protected function hydrateDb(string $file, array $data): void
     {
         $giftCode = $this->em->getRepository(GiftCode::class)->findOneBy(['code' => $data[self::GIFT_CODE]]);
-        if ($giftCode === null && !\in_array($this->code, $data[self::GIFT_CODE], true)) {
+        if ($giftCode === null && !\in_array($this->giftCode, $data[self::GIFT_CODE], true)) {
             $giftCode = new GiftCode();
             $giftCode->setCode($data[self::GIFT_CODE]);
             $this->em->persist($giftCode);
-            $this->code[] = $data[self::GIFT_CODE];
+            $this->giftCode[] = $data[self::GIFT_CODE];
         }
 
         $gift = $this->em->getRepository(Gift::class)->findOneBy(['uuid' => $data[self::GIFT_UUID]]);
